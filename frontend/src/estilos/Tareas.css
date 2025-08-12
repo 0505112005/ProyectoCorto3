@@ -1,0 +1,165 @@
+/* src/estilos/Tareas.css */
+
+.tareas-container {
+  max-width: 600px;
+  margin: 3rem auto;
+  background: #fefefe;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+.tareas-title {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2c3e50;
+}
+
+.tareas-error {
+  background-color: #fdecea;
+  color: #e74c3c;
+  border: 1px solid #e74c3c;
+  padding: 0.75rem 1rem;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.tareas-newtask {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.tareas-newtask input[type="text"] {
+  flex-grow: 1;
+  padding: 0.6rem 0.8rem;
+  border: 2px solid #3498db;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.tareas-newtask input[type="text"]:focus {
+  outline: none;
+  border-color: #2980b9;
+  box-shadow: 0 0 8px #2980b9aa;
+}
+
+.tareas-newtask button {
+  background-color: #3498db;
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: 0 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 1rem;
+}
+
+.tareas-newtask button:hover {
+  background-color: #2980b9;
+}
+
+.tareas-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tareas-empty {
+  text-align: center;
+  color: #777;
+  font-style: italic;
+  margin-top: 1rem;
+}
+
+.tarea-item {
+  display: flex;
+  align-items: center;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid #ddd;
+  gap: 0.75rem;
+  font-size: 1.1rem;
+  transition: background-color 0.2s ease;
+}
+
+.tarea-item:hover {
+  background-color: #f1f8ff;
+}
+
+.tarea-checkbox {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.tarea-title {
+  flex-grow: 1;
+  user-select: none;
+}
+
+.tarea-item.completed .tarea-title {
+  text-decoration: line-through;
+  color: #7f8c8d;
+  font-style: italic;
+}
+
+.tarea-editinput {
+  flex-grow: 1;
+  padding: 0.4rem 0.6rem;
+  font-size: 1.1rem;
+  border: 2px solid #3498db;
+  border-radius: 5px;
+}
+
+.btn {
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+}
+
+.btn-edit {
+  background-color: #f39c12;
+  color: white;
+}
+
+.btn-edit:hover {
+  background-color: #d68910;
+}
+
+.btn-delete {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.btn-delete:hover {
+  background-color: #c0392b;
+}
+
+.btn-save {
+  background-color: #27ae60;
+  color: white;
+}
+
+.btn-save:hover {
+  background-color: #1e8449;
+}
+
+.btn-cancel {
+  background-color: #7f8c8d;
+  color: white;
+}
+
+.btn-cancel:hover {
+  background-color: #606b6f;
+}
