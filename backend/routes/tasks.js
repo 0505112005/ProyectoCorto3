@@ -1,74 +1,87 @@
 const express = require('express');
-const jwt = require('jsonwebtoken');
-const Task = require('../models/Task');
 const router = express.Router();
+const mongoose = require('mongoose');
+const Task = require('../models/task'); // Importar el modelo Task
+const authMiddleware = require('../middleware/authMiddleware');
 
-// Middleware para verificar que el usuario esté autenticado
-const authMiddleware = (req, res, next) => {
-  const token = req.headers.authorization?.split(' ')[1]; // sacar token del header
-  if (!token) return res.status(401).json({ msg: 'Token requerido' });
+// Proteger todas las rutas con el middleware de autenticación
+router.use(authMiddleware);
 
+// Crear nueva tarea
+router.post('/', async (req, res) => {
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET); // verificar token
-    req.userId = decoded.id; // guardar id del usuario en la request
-    next(); // seguir con la siguiente función
-  } catch {
-    res.status(401).json({ msg: 'Token inválido' });
+    const userId = new mongoose.Types.ObjectId(req.userId);
+    
+    const task = new Task({
+      title: req.body.title,
+      user: userId,
+      completed: false
+    });
+
+    const savedTask = await task.save();
+    res.json(savedTask);
+  } catch (error) {
+    console.error('Error al crear tarea:', error);
+    res.status(500).json({ 
+      msg: 'Error al crear tarea', 
+      error: error.message 
+    });
   }
-};
+});
 
-router.use(authMiddleware); // aplicar middleware a todas las rutas de tareas
-
-// Obtener todas las tareas del usuario logueado
+// Obtener tareas solo del usuario autenticado
 router.get('/', async (req, res) => {
   try {
-    console.log('GET /api/tasks usuario:', req.userId);
-    const tasks = await Task.find({ user: req.userId }); // buscar solo tareas de este usuario
+    const userId = new mongoose.Types.ObjectId(req.userId);
+    const tasks = await Task.find({ user: userId });
     res.json(tasks);
   } catch (error) {
-    console.error('Error obteniendo tareas:', error);
+    console.error('Error al obtener tareas:', error);
     res.status(500).json({ msg: 'Error al obtener tareas' });
   }
 });
 
-// Crear una nueva tarea para el usuario logueado
-router.post('/', async (req, res) => {
-  try {
-    console.log('POST /api/tasks body:', req.body, 'usuario:', req.userId);
-    const task = new Task({ ...req.body, user: req.userId }); // asociar tarea al usuario
-    await task.save();
-    res.status(201).json(task);
-  } catch (error) {
-    console.error('Error guardando tarea:', error);
-    res.status(500).json({ msg: 'Error al guardar tarea' });
-  }
-});
-
-// Actualizar una tarea específica del usuario
+// Actualizar tarea (título y completado) solo si es del usuario
 router.put('/:id', async (req, res) => {
   try {
-    const task = await Task.findOneAndUpdate(
-      { _id: req.params.id, user: req.userId }, // solo actualizar si es del usuario
-      req.body,
-      { new: true } // devolver la tarea actualizada
-    );
+    const { id } = req.params;
+    const { title, completed } = req.body;
+
+    const task = await Task.findById(id);
     if (!task) return res.status(404).json({ msg: 'Tarea no encontrada' });
+
+    if (task.user.toString() !== req.userId) {
+      return res.status(403).json({ msg: 'No autorizado para modificar esta tarea' });
+    }
+
+    if (title !== undefined) task.title = title;
+    if (completed !== undefined) task.completed = completed;
+
+    await task.save();
     res.json(task);
   } catch (error) {
-    console.error('Error actualizando tarea:', error);
-    res.status(500).json({ msg: 'Error al actualizar tarea' });
+    console.error('Error al actualizar tarea:', error);
+    res.status(500).json({ msg: 'Error en el servidor' });
   }
 });
 
-// Eliminar una tarea específica del usuario
+// Eliminar tarea solo si es del usuario
 router.delete('/:id', async (req, res) => {
   try {
-    const task = await Task.findOneAndDelete({ _id: req.params.id, user: req.userId });
+    const { id } = req.params;
+
+    const task = await Task.findById(id);
     if (!task) return res.status(404).json({ msg: 'Tarea no encontrada' });
+
+    if (task.user.toString() !== req.userId) {
+      return res.status(403).json({ msg: 'No autorizado para eliminar esta tarea' });
+    }
+
+    await task.deleteOne();
     res.json({ msg: 'Tarea eliminada' });
   } catch (error) {
-    console.error('Error eliminando tarea:', error);
-    res.status(500).json({ msg: 'Error al eliminar tarea' });
+    console.error('Error al eliminar tarea:', error);
+    res.status(500).json({ msg: 'Error en el servidor' });
   }
 });
 
