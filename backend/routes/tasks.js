@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const Task = require('../models/task'); // Importar el modelo Task
+const Task = require('../models/Task'); // Importar el modelo Task
 const authMiddleware = require('../middleware/authMiddleware');
 
 // Proteger todas las rutas con el middleware de autenticación

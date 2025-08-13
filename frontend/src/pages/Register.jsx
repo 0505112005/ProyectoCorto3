@@ -46,6 +46,11 @@ function Register() {
         return;
       }
 
+      // Guardar el token si se recibe en la respuesta
+      if (data.token) {
+        localStorage.setItem('token', data.token);
+      }
+
       // si todo salió bien, redirigir a login
       navigate("/login");
     } catch (err) {

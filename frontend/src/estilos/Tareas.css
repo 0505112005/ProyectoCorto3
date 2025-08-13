@@ -1,165 +1,220 @@
 /* src/estilos/Tareas.css */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary: #4158D0;
+  --secondary: #C850C0;
+  --accent: #FFCC70;
+  --danger: #FF4757;
+  --success: #27ae60;
+  --warning: #F39C12;
+  --gray: #7f8c8d;
+  --white-alpha: rgba(255, 255, 255, 0.9);
+  --white-alpha-light: rgba(255, 255, 255, 0.7);
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --gradient-main: linear-gradient(135deg, var(--primary), var(--secondary));
+  --gradient-warning: linear-gradient(135deg, #F1C40F, var(--warning));
+  --gradient-danger: linear-gradient(135deg, var(--danger), #FF6B81);
+  --shadow-sm: 0 4px 15px var(--shadow-color);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.15);
+  --blur: blur(8px);
+  --radius-sm: 14px;
+  --radius-lg: 20px;
+  --spacing: 0.5rem;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --font-main: 'Plus Jakarta Sans', sans-serif;
+}
+
+body {
+  background: linear-gradient(120deg, var(--primary), var(--secondary) 46%, var(--accent));
+  min-height: 100vh;
+  margin: 0;
+  padding: var(--spacing-lg);
+  font-family: var(--font-main);
+  position: relative;
+  color: var(--dark);
+  font-size: var(--font-size-md);
+  line-height: 1.6;
+}
+
+
 
 .tareas-container {
-  max-width: 600px;
-  margin: 3rem auto;
-  background: #fefefe;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  border-radius: 10px;
-  padding: 2rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #333;
+  max-width: 800px;
+  margin: calc(var(--spacing) * 4) auto;
+  background: var(--white-alpha);
+  backdrop-filter: var(--blur);
+  box-shadow: var(--shadow-lg), inset 0 0 0 1px var(--white-alpha-light);
+  border-radius: var(--radius-lg);
+  padding: calc(var(--spacing) * 4);
+  color: var(--dark);
+  transition: var(--transition);
 }
+
+
 
 .tareas-title {
   text-align: center;
-  margin-bottom: 1.5rem;
-  font-size: 2rem;
+  margin-bottom: calc(var(--spacing) * 4);
+  font-size: 2.5rem;
   font-weight: 700;
-  color: #2c3e50;
+  background: var(--gradient-main);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .tareas-error {
-  background-color: #fdecea;
-  color: #e74c3c;
-  border: 1px solid #e74c3c;
-  padding: 0.75rem 1rem;
-  border-radius: 5px;
-  margin-bottom: 1rem;
-  font-weight: 600;
+  background: rgba(255, 71, 87, 0.1);
+  color: var(--danger);
+  border: 2px solid rgba(255, 71, 87, 0.2);
+  padding: calc(var(--spacing) * 2);
+  border-radius: var(--radius-sm);
+  margin-bottom: calc(var(--spacing) * 2);
+  font-weight: 500;
+  backdrop-filter: var(--blur);
 }
 
 .tareas-newtask {
   display: flex;
-  gap: 0.75rem;
-  margin-bottom: 1.5rem;
+  gap: var(--spacing);
+  margin-bottom: calc(var(--spacing) * 3);
+  position: relative;
 }
 
 .tareas-newtask input[type="text"] {
-  flex-grow: 1;
-  padding: 0.6rem 0.8rem;
-  border: 2px solid #3498db;
-  border-radius: 5px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
+  flex: 1;
+  padding: calc(var(--spacing) * 2);
+  border: 2px solid rgba(200, 80, 192, 0.1);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  transition: var(--transition);
 }
 
-.tareas-newtask input[type="text"]:focus {
-  outline: none;
-  border-color: #2980b9;
-  box-shadow: 0 0 8px #2980b9aa;
-}
+
 
 .tareas-newtask button {
-  background-color: #3498db;
-  border: none;
+  padding: 0 calc(var(--spacing) * 2);
+  background: var(--gradient-main);
   color: white;
+  border: none;
+  border-radius: var(--radius-sm);
   font-weight: 600;
-  padding: 0 1rem;
-  border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-size: 1rem;
-}
-
-.tareas-newtask button:hover {
-  background-color: #2980b9;
+  transition: var(--transition);
 }
 
 .tareas-list {
   list-style: none;
   padding: 0;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
 }
 
 .tareas-empty {
   text-align: center;
-  color: #777;
+  color: var(--gray);
   font-style: italic;
-  margin-top: 1rem;
+  margin-top: var(--spacing-lg);
+  padding: var(--spacing-lg);
+  background: var(--white-alpha-light);
+  border-radius: var(--radius-sm);
+  backdrop-filter: var(--blur);
 }
 
 .tarea-item {
   display: flex;
   align-items: center;
-  padding: 0.6rem 0.75rem;
-  border-bottom: 1px solid #ddd;
-  gap: 0.75rem;
-  font-size: 1.1rem;
-  transition: background-color 0.2s ease;
+  padding: var(--spacing) calc(var(--spacing) * 2);
+  background: var(--white-alpha-light);
+  border-radius: var(--radius-sm);
+  gap: var(--spacing);
+  transition: var(--transition);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-.tarea-item:hover {
-  background-color: #f1f8ff;
-}
 
 .tarea-checkbox {
-  width: 20px;
-  height: 20px;
+  width: 24px;
+  height: 24px;
   cursor: pointer;
+  border: 2px solid var(--secondary);
+  border-radius: 6px;
+  transition: var(--transition);
+  position: relative;
+  background: white;
+}
+
+.tarea-checkbox:checked {
+  background: var(--gradient-main);
+  border-color: transparent;
+}
+
+.tarea-checkbox:checked::after {
+  content: '✓';
+  position: absolute;
+  color: white;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .tarea-title {
-  flex-grow: 1;
+  flex: 1;
   user-select: none;
 }
 
 .tarea-item.completed .tarea-title {
   text-decoration: line-through;
-  color: #7f8c8d;
+  color: var(--gray);
   font-style: italic;
 }
 
 .tarea-editinput {
-  flex-grow: 1;
-  padding: 0.4rem 0.6rem;
-  font-size: 1.1rem;
-  border: 2px solid #3498db;
-  border-radius: 5px;
+  flex: 1;
+  padding: var(--spacing);
+  border: 2px solid var(--primary);
+  border-radius: 6px;
+  transition: var(--transition);
 }
 
-.btn {
-  border: none;
-  padding: 0.4rem 0.8rem;
-  border-radius: 5px;
-  cursor: pointer;
+.tarea-editinput:focus {
+  outline: none;
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Botones */
+.btn, .btn-logout {
+  all: unset;
+  padding: 0.85rem 1.5rem;
+  border-radius: var(--radius-sm);
   font-weight: 600;
-  font-size: 0.9rem;
-  transition: background-color 0.3s ease;
-}
-
-.btn-edit {
-  background-color: #f39c12;
+  font-size: 0.95rem;
   color: white;
+  cursor: pointer;
+  background: var(--gradient-main);
+  box-shadow: var(--shadow-sm);
+  transition: var(--transition);
 }
 
-.btn-edit:hover {
-  background-color: #d68910;
+.btn:hover, .btn-logout:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.btn:active, .btn-logout:active { transform: translateY(0); }
+.btn-edit { background: var(--gradient-warning); }
+.btn-delete { background: var(--gradient-danger); }
+.btn-save { background: linear-gradient(135deg, var(--success), #2ecc71); }
+.btn-cancel { background: linear-gradient(135deg, var(--gray), #95a5a6); }
+
+/* Botón de cerrar sesión */
+.btn-logout {
+  position: fixed;
+  top: 0.5rem;
+  left: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  
 }
 
-.btn-delete {
-  background-color: #e74c3c;
-  color: white;
-}
-
-.btn-delete:hover {
-  background-color: #c0392b;
-}
-
-.btn-save {
-  background-color: #27ae60;
-  color: white;
-}
-
-.btn-save:hover {
-  background-color: #1e8449;
-}
-
-.btn-cancel {
-  background-color: #7f8c8d;
-  color: white;
-}
-
-.btn-cancel:hover {
-  background-color: #606b6f;
-}

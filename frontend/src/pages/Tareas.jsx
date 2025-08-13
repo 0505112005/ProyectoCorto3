@@ -230,11 +230,9 @@ const Tareas = () => {
 
   return (
     <div className="tareas-container">
-      {/* Botón para cerrar sesión */}
-      <button onClick={handleLogout} style={{ marginBottom: "1rem" }}>
+      <button className="btn-logout" onClick={handleLogout}>
         Cerrar Sesión
       </button>
-
       <h1 className="tareas-title">Gestión de Tareas</h1>
 
       {error && <div className="tareas-error">{error}</div>}
